@@ -1,3 +1,23 @@
-<!-- views/partials/header.ejs -->
+<!-- views/partials/_header.ejs -->
+
+<!DOCTYPE html>
+
 
 <title> TinyApp - URL Shortner! </title>
+
+<% if (username) { %>
+  <p style="padding-left: 40px">
+    <%= username %>
+    <form action="/logout" method="POST">
+      <input id="logout" type="submit" value="Logout">
+    </form>
+  </p>
+<% } else { %>
+  <form action="/login" method="POST">
+    <label for="username">Login </label>
+    <input id="username" type="text" name="username" style="width: 100px">
+    <input type="submit" value="Login">
+  </form>
+<% } %>
+
+
