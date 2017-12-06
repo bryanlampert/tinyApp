@@ -4,20 +4,19 @@
     <% include ../partials/_header %>
 </head>
 <body>
-    <h2>List of current URLS</h2>
-    <ul>
+    <h1 style="padding-left: 40px">List of current URLS</h1>
+    <ul style="font-size: 20px">
       <% for (url in urls) { %>
-
           <a href="/urls/<%= url %>"> <%= url %> </a> &#8594; <%= urls[url] %>
           <a href="/urls/<%=url%>">Edit</a>
           <form method="POST" action="/urls/<%=url%>/delete">
             <label for="delete"></label>
-            <button type="submit" value="delete">Delete <img src="http://pngimg.com/uploads/trash_can/trash_can_PNG18430.png" style="width:15px;height:15px;" vspace="2"></button>
+            <button type="submit" value="delete" style="background:red; font-size:15px; padding: 5px;">Delete <img src="http://www.clipartmasters.com/clip-arts/1409/trash-can-icon-1409727.png" style="width:15px;height:15px;padding-top:5px" vspace="2"></button>
           </form>
           <br>
       <% } %>
     </ul>
     <br>
-    <a href="/urls/new"> Create a new shortened URL</a>
+    <a href="/urls/new" style="padding-left: 40px"> Create a new shortened URL</a>
 </body>
 </html>

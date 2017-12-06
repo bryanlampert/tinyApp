@@ -19,9 +19,25 @@ app.get("/", (req, res) => {
   res.end("Hello!");
 });
 
+// URLs page
+app.get("/urls", (req, res) => {
+  let templateVars = { urls: urlDatabase };
+  res.render("urls_index", templateVars);
+});
+
 // Route and post the new urls created in the urls_new form
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
+});
+
+//redirecting the short url to redirect
+app.get("/u/:shortURL", (req, res) => {
+  let longURL = urlDatabase[req.params.shortURL];
+  res.redirect(longURL);
+});
+
+app.get("/urls.json", (req, res) => {
+  res.json(urlDatabase);
 });
 
 // Adds randomstring to the url keys and redirects to this page
@@ -29,10 +45,6 @@ app.post("/urls", (req, res) => {
   let rdmUrl = generateRandomString ();
   urlDatabase[rdmUrl] = req.body.longURL;
   res.redirect(301, `/urls/${rdmUrl}`);
-});
-
-app.get("/urls.json", (req, res) => {
-  res.json(urlDatabase);
 });
 
 // New page for each of the id's
@@ -53,18 +65,6 @@ app.post("/urls/:id/edit", (req, res) => {
   res.redirect(`/urls/${req.params.id}`);
 });
 
-//redirecting the short url to redirect
-app.get("/u/:shortURL", (req, res) => {
-  let longURL = urlDatabase[req.params.shortURL];
-  res.redirect(longURL);
-});
-
-// URLs page
-app.get("/urls", (req, res) => {
-  let templateVars = { urls: urlDatabase };
-  res.render("urls_index", templateVars);
-});
-
 app.post("/urls/:id/delete", (req, res) => {
   delete urlDatabase[req.params.id];
   res.redirect('/urls');
@@ -75,7 +75,7 @@ app.get("/hello", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}!`);
+  console.log(`TinyApp URL Shortener is listening on port ${PORT}!`);
 });
 
 

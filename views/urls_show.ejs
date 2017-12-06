@@ -8,16 +8,17 @@
 <body>
   <h3> Your Short URL: <a href="<%= shortURL %>"> <%= shortURL %></a></h3>
     Was created from your original long url: <a href="<%= urls[shortURL] %>"> <%= urls[shortURL] %> </a>
-
-  <form action="/urls/<%=shortURL%>/edit" method="POST" style="margin:150px;">
-    <label for="updLongURL">Edit original long URL:</label>
-    <input id="updLongURL" type="text" name="updLongURL" value="<%= urls[shortURL] %>" style="width: 300px">
-    <input type="submit" value="Update">
-  </form>
+  <p>
+    <form action="/urls/<%=shortURL%>/edit" method="POST">
+      <label for="updLongURL">Edit original long URL:</label><br>
+      <input id="updLongURL" type="text" name="updLongURL" value="<%= urls[shortURL] %>" style="width: 300px">
+      <input type="submit" value="Update">
+    </form>
+  </p>
 
 
   <br><br><br>
-  <a href="/urls/new"> Create a new shortened URL</a>
+  <a href="/urls/new"> Create a new shortened URL</a><br><br>
   <a href="/urls"> Go back to the url list! </a>
 </body>
 
