@@ -11,8 +11,18 @@ app.set("view engine", "ejs");
 
 //Current url database
 let urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "Vazquez": {
+    "b2xVn2": "http://www.lighthouselabs.ca",
+    "9sm5xK": "http://www.google.com"
+  },
+  "Bradley": {
+    "tfc123": "http://www.torontofc.ca",
+    "mlssoc": "http://www.mlssoccer.com"
+  },
+  "Giovinco": {
+    "Juve87": "http://www.juventus.com",
+    "Reddit": "http://www.reddit.com"
+  }
 };
 
 //Users database
@@ -34,6 +44,15 @@ const users = {
   }
 };
 
+function urlsForUser(id) {
+  for (let i in users) {
+    if (users[i].id === id) {
+      let usersUrls = urlDatabase[id];
+      return usersUrls;
+    }
+  }
+}
+
 //Home page
 app.get("/", (req, res) => {
   res.end("Hello!");
@@ -43,17 +62,9 @@ app.get("/", (req, res) => {
 app.get("/urls", (req, res) => {
   let templateVars = {
     user: users[req.cookies.user_id],
-    urls: urlDatabase
+    urls: urlsForUser(req.cookies.user_id)
   };
   res.render("urls_index", templateVars);
-});
-
-// Route and post the new urls created in the urls_new form
-app.get("/urls/new", (req, res) => {
-  let templateVars = {
-    user: users[req.cookies.user_id]
-  };
-  res.render("urls_new", templateVars);
 });
 
 //Renders the login page
@@ -64,6 +75,25 @@ app.get("/login", (req, res) => {
     password: req.cookies.password
   };
   res.render("login", templateVars);
+});
+
+// Checks if user has logged in, if so send to the create new url screen
+app.get("/urls/new", (req, res) => {
+  let loggedIn = false;
+  for (let i in users) {
+    if (req.cookies.user_id === users[i].id) {
+      let templateVars = {
+        user: users[req.cookies.user_id],
+        urls: urlsForUser(req.cookies.user_id)
+      };
+      loggedIn = true;
+      res.render("urls_new", templateVars);
+    }
+  }
+  if (loggedIn === false) {
+    res.redirect('/login');
+  }
+
 });
 
 //Renders the registration page
@@ -78,28 +108,35 @@ app.get("/register", (req, res) => {
 
 // New page for each of the id's
 app.get("/urls/:id", (req, res) => {
-  if (urlDatabase[req.params.id]) {
+  if (urlDatabase[req.cookies.user_id][req.params.id]) {
     let templateVars = {
       user: users[req.cookies.user_id],
       shortURL: req.params.id,
-      urls: urlDatabase
+      urls: urlsForUser(req.cookies.user_id)
     };
     res.render("urls_show", templateVars);
   } else {
-    res.status(404).send('Sorry.. Page not found!');
+    res.status(404).send('Sorry.. Please login to access this page!');
   }
 });
 
 //redirecting the short url to redirect
 app.get("/u/:shortURL", (req, res) => {
-  let longURL = urlDatabase[req.params.shortURL];
-  res.redirect(longURL);
+  for (let u in urlDatabase) {
+    if (urlDatabase[u][req.params.shortURL]) {
+      let longURL = urlDatabase[u][req.params.shortURL];
+      res.redirect(longURL);
+      return;
+    }
+  }
+  res.redirect("/urls/new");
 });
 
 app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
+//Login check
 app.post("/login", (req, res) => {
   for (let l in users) {
     if (req.body.email == users[l].email) {
@@ -116,6 +153,7 @@ app.post("/login", (req, res) => {
   res.status(403).send(`403! Email not found!`);
 });
 
+//Registration check
 app.post("/register", (req, res) => {
   let rdmUserId = generateRandomString ();
 
@@ -126,7 +164,6 @@ app.post("/register", (req, res) => {
       return res.status(400).send(`400! Request could not be completed! Email already in use! ...sorry`);
     }
   }
-
 
   res.cookie('user_id', rdmUserId);
   users[rdmUserId] = {
@@ -147,22 +184,22 @@ app.post("/logout", (req, res) => {
 // Adds randomstring to the url keys and redirects to this page
 app.post("/urls", (req, res) => {
   let rdmUrl = generateRandomString ();
-  urlDatabase[rdmUrl] = req.body.longURL;
+  urlsForUser(req.cookies.user_id)[rdmUrl] = req.body.longURL;
   res.redirect(`/urls/${rdmUrl}`);
 });
 
 app.post("/urls/:id/edit", (req, res) => {
-  urlDatabase[req.params.id] = req.body.updLongURL;
+  urlsForUser(req.cookies.user_id)[req.params.id] = req.body.updLongURL;
   res.redirect(`/urls/${req.params.id}`);
 });
 
 app.post("/urls/:id/delete", (req, res) => {
-  delete urlDatabase[req.params.id];
+  delete urlsForUser(req.cookies.user_id)[req.params.id];
   res.redirect('/urls');
 });
 
 app.get("/hello", (req, res) => {
-  res.end("<html><body>Hello <b>World</b></body></html>\n");
+  res.end("<html><body>Temp <b>Page</b></body></html>\n");
 });
 
 app.listen(PORT, () => {
