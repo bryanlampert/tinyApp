@@ -5,19 +5,19 @@
 
 <title> TinyApp - URL Shortner! </title>
 
-<% if (username) { %>
-  <p style="padding-left: 40px">
-    <%= username %>
-    <form action="/logout" method="POST">
+<% if (user) { %>
+
+  <p style="padding-left: 40px; display: inline-block;width: 70px">
+    <%= user.id %>
+    <form action="/logout" method="POST" style="display: inline-block;width: 10px">
       <input id="logout" type="submit" value="Logout">
     </form>
   </p>
+
 <% } else { %>
-  <form action="/login" method="POST">
-    <label for="username">Login </label>
-    <input id="username" type="text" name="username" style="width: 100px">
-    <input type="submit" value="Login">
-  </form>
+
+  <a href="/login">Login</a> <a href="/register">Register</a>
+
 <% } %>
 
 

@@ -9,9 +9,8 @@
       <% for (url in urls) { %>
           <a href="/urls/<%= url %>"> <%= url %> </a> &#8594; <%= urls[url] %>
           <a href="/urls/<%=url%>">Edit</a>
-          <form method="POST" action="/urls/<%=url%>/delete">
-            <label for="delete"></label>
-            <button type="submit" value="delete" style="background:red; font-size:15px; padding: 5px;">Delete <img src="http://www.clipartmasters.com/clip-arts/1409/trash-can-icon-1409727.png" style="width:15px;height:15px;padding-top:5px" vspace="2"></button>
+          <form method="POST" action="/urls/<%=url%>/delete" style="display: inline-block;">
+            <button type="submit" value="delete" style="background:red; font-size:15px; padding: 5px;">Delete <img src="http://www.clipartmasters.com/clip-arts/1409/trash-can-icon-1409727.png" style="width:15px;height:15px;padding-top:5px;display: inline-block;" vspace="2"></button>
           </form>
           <br>
       <% } %>
