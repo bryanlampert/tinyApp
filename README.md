@@ -6,12 +6,16 @@ TinyApp is a full stack web application built with Node and Express that allows 
 ##Features
 - Allows users to create shorter urls from a long url
 - Personal list of shortURLs always available to each user
-- 
+- Users have the ability to edit and delete their short urls
+- Outbound short urls can be sent and accessed by anyone
 
 ## Final Product
-
-!["screenshot description"](#)
-!["screenshot description"](#)
+Login Page:
+!["Screenshot of Login Page"](https://github.com/bryanlampert/tinyApp/blob/master/docs/Login-Page.png)
+URLs Page:
+!["Screenshot of URLs Page"](https://github.com/bryanlampert/tinyApp/blob/master/docs/URLs-List-Page.png)
+ShortURL Page:
+!["Screenshot of ShortURL Page"](https://github.com/bryanlampert/tinyApp/blob/master/docs/Short-Url-Edit-Page.png)
 
 ## Dependencies
 
