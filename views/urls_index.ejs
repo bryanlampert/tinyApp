@@ -1,21 +1,55 @@
+<!-- views/views/urls_index.ejs -->
+
 <!DOCTYPE html>
+
 <html lang="en">
+
+<!-- Include the stylesheet -->
 <head>
-    <% include ../partials/_header %>
+  <% include ../partials/styles %>
 </head>
+
 <body>
+  <% include ../partials/_header %>
+
+  <!-- Displays the current users list of created short urls
+    Also includes links to edit the url (brings it to the individual url page)
+    As well as a delete button to remove the short url from the database -->
+  <% if (user) { %>
+
     <h1 style="padding-left: 40px">List of current URLS</h1>
     <ul style="font-size: 20px">
       <% for (url in urls) { %>
-          <a href="/urls/<%= url %>"> <%= url %> </a> &#8594; <%= urls[url] %>
-          <a href="/urls/<%=url%>">Edit</a>
-          <form method="POST" action="/urls/<%=url%>/delete" style="display: inline-block;">
-            <button type="submit" value="delete" style="background:red; font-size:15px; padding: 5px;">Delete <img src="http://www.clipartmasters.com/clip-arts/1409/trash-can-icon-1409727.png" style="width:15px;height:15px;padding-top:5px;display: inline-block;" vspace="2"></button>
+          <a href="/u/<%= url %>"> <%= url %> </a> &#8594; <%= urls[url] %>
+          <a href="/urls/<%=url%>" style="padding-left: 15px;">Edit</a>
+          <form method="POST" action="/urls/<%=url%>/delete" style="display: inline-block; padding: 10px;">
+            <button type="submit" value="delete" title="Delete URL" style="background-color: #fe6a4a; border-radius: 5px;"><img src="http://www.clipartmasters.com/clip-arts/1409/trash-can-icon-1409727.png" style="width: 15px; height: 15px; display: inline-block;" vspace="2"></button>
           </form>
           <br>
       <% } %>
     </ul>
+
     <br>
-    <a href="/urls/new" style="padding-left: 40px"> Create a new shortened URL</a>
+    <br>
+    <h5>
+      <a href="/urls/new"> Create a new short URL</a>
+    </h5>
+
+  <% } else { %>
+    <h1 style="padding-left: 40px">List of current URLS</h1>
+    <br><br>
+    <div style="border: dashed;">
+      <h3>
+        <font color="red" size="10">Sorry! </font><br><br>
+        Please <a href="/login">Login</a> before you can access your urls.
+      </h3>
+      <h5>
+        - Management
+      <h5>
+    </div>
+
+  <% } %>
+
 </body>
+
 </html>

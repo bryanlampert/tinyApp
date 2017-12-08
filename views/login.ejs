@@ -1,24 +1,48 @@
+<!-- views/views/login.ejs -->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
+<!-- Include the stylesheet -->
 <head>
-    <% include ../partials/_header %>
+    <% include ../partials/styles %>
 </head>
 
 <body>
-  <h3> Login </h3>
-  <p>
-    <form action="/login" method="POST">
-      <input id="email" type="email" name="email" placeholder="Enter your email login" style="width: 160px">
-      <input id="password" type="password" name="password" placeholder="Enter your password" style="width: 160px">
-      <input type="submit" value="Login">
-    </form>
-  </p>
+  <% include ../partials/_header %>
 
 
-  <br><br><br>
-  <a href="/urls/new"> Create a new shortened URL</a><br><br>
-  <a href="/urls"> Go back to the url list! </a>
+  <!-- Form for logging in with username and password -->
+  <% if (login) {%>
+
+    <h5>
+      <form action="/login" method="POST">
+        <input id="email" type="email" name="email" placeholder="Enter your email login" style="width: 160px">
+        <input id="password" type="password" name="password" placeholder="Enter your password" style="width: 160px">
+        <input type="submit" value="Login">
+      </form>
+    </h5>
+
+  <% } else if (!login) { %>
+
+    <h5>
+      <form action="/login" method="POST">
+        <input id="email" type="email" name="email" placeholder="Enter your email login" style="width: 160px">
+        <input id="password" type="password" name="password" placeholder="Enter your password" style="width: 160px">
+        <input type="submit" value="Login">
+      </form>
+    </h5>
+
+
+    <h3>
+      <font size="3">Email/Password does not match our records <br>
+      Please try logging in again.</font>
+    </h3>
+
+  <% } %>
+
+
 </body>
 
 </html>

@@ -2,21 +2,45 @@
 
 <!DOCTYPE html>
 
+<title> TinyApp - URL Shortener! </title>
 
-<title> TinyApp - URL Shortner! </title>
+<!-- Include the bootstrap stylesheet and styles partial -->
+<% include ../partials/styles %>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<!-- Checks if user is logged in -->
 <% if (user) { %>
+  <!-- If the user is logged in, displays the header for a logged in user -->
+  <div class="jumbotron text-center">
+    <h4>
+      <%= user.email %>
+      <form action="/logout" method="POST" title="LOGOUT" style="display: inline-block;">
+        <input id="logout" type="submit" value="Logout">
+      </form>
+      <a href="/urls/new" style="padding: 10px;"> Create URL</a>
+      <a href="/urls" style="padding: 10px"> Your URL list </a>
+    </h4>
 
-  <p style="padding-left: 40px; display: inline-block;width: 70px">
-    <%= user.id %>
-    <form action="/logout" method="POST" style="display: inline-block;width: 10px">
-      <input id="logout" type="submit" value="Logout">
-    </form>
-  </p>
+    <h1>TinyApp</h1>
+    <p>Shortening your URLs</p>
+    <p style="font-size: 10px;">Since 2017</p>
+
+  </div>
 
 <% } else { %>
-
-  <a href="/login">Login</a> <a href="/register">Register</a>
+  <!-- If the user is not logged in, displays the header for new/returning users -->
+  <div class="jumbotron text-center">
+    <h3>
+      <a href="/login" style="padding: 10px">Login </a> <a href="/register" style="padding: 10px">Register</a>
+    </h3>
+    <h1>TinyApp</h1>
+    <p>Shortening your URLs</p>
+    <p style="font-size: 10px;">Since 2017</p>
+  </div>
 
 <% } %>
 

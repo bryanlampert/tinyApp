@@ -1,27 +1,65 @@
+<!-- views/views/register.ejs -->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
+<!-- Include the stylesheet -->
 <head>
-    <% include ../partials/_header %>
+    <% include ../partials/styles %>
 </head>
 
 <body>
-  <h3> Register </h3>
-  <p>
+  <!-- Displays the header -->
+  <% include ../partials/_header %>
+  <h1>Register</h1>
+
+  <!-- Form for registration including email and password -->
+ <% if (blank === true) {%>
     <form action="/register" method="POST">
       <label for="email">Email:</label>
       <input id="email" type="email" name="email" placeholder="Enter your email" style="width: 300px"> <br>
       <label for="password">Password:</label>
-      <input id="password" type="password" name="password" placeholder="Enter a password" style="width: 300px"> <br>
-
+      <input id="password" type="password" name="password" placeholder="Enter a password" style="width: 300px">
+      <br><br>
       <input type="submit" value="Register now!" onSubmit="Thank you for registering!">
     </form>
-  </p>
+
+     <h3>
+      <font size="3">Please fill out all fields.</font>
+    </h3>
+
+  <% } else if (email === true) {%>
+
+    <form action="/register" method="POST">
+      <label for="email">Email:</label>
+      <input id="email" type="email" name="email" placeholder="Enter your email" style="width: 300px"> <br>
+      <label for="password">Password:</label>
+      <input id="password" type="password" name="password" placeholder="Enter a password" style="width: 300px">
+      <br><br>
+      <input type="submit" value="Register now!" onSubmit="Thank you for registering!">
+    </form>
+
+     <h3>
+      <font size="3">Email already in use!</font>
+    </h3>
 
 
-  <br><br><br>
-  <a href="/urls/new"> Create a new shortened URL</a><br><br>
-  <a href="/urls"> Go back to the url list! </a>
+  <% } else {%>
+
+    <p>
+      <form action="/register" method="POST">
+        <label for="email">Email:</label>
+        <input id="email" type="email" name="email" placeholder="Enter your email" style="width: 300px"> <br>
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password" placeholder="Enter a password" style="width: 300px">
+        <br><br>
+        <input type="submit" value="Register now!" onSubmit="Thank you for registering!">
+      </form>
+    </p>
+
+  <% } %>
+
 </body>
 
 </html>

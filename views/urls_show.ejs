@@ -1,25 +1,60 @@
+<!-- views/views/urls_show.ejs -->
+
 <!DOCTYPE html>
+
 <html lang="en">
 
+<!-- Include the stylesheet -->
 <head>
-    <% include ../partials/_header %>
+    <% include ../partials/styles %>
 </head>
 
 <body>
-  <h3> Your Short URL: <a href="<%= shortURL %>"> <%= shortURL %></a></h3>
-    Was created from your original long url: <a href="<%= urls[shortURL] %>"> <%= urls[shortURL] %> </a>
-  <p>
-    <form action="/urls/<%=shortURL%>/edit" method="POST">
-      <label for="updLongURL">Edit original long URL:</label><br>
-      <input id="updLongURL" type="text" name="updLongURL" value="<%= urls[shortURL] %>" style="width: 300px">
-      <input type="submit" value="Update">
-    </form>
-  </p>
+  <% include ../partials/_header %>
+  <!-- Displays new url and original url -->
 
+  <% if (user) {%>
 
-  <br><br><br>
-  <a href="/urls/new"> Create a new shortened URL</a><br><br>
-  <a href="/urls"> Go back to the url list! </a>
+    <% if (urls[shortURL]) { %>
+      <h3> Your new short URL: <a href="/u/<%= shortURL %>" title="/u/<%= shortURL %>"> /u/<%= shortURL %></a><br><br>
+        Was created from: <a href="<%= urls[shortURL] %>" title="<%= urls[shortURL] %>"> <%= urls[shortURL] %> </a>
+      </h3>
+      <br><br><br>
+
+      <!-- Form for updating the original long url entered -->
+      <h5>
+        <form action="/urls/<%=shortURL%>/edit" method="POST">
+          <label for="updLongURL">Edit your original long URL:</label><br>
+          <input id="updLongURL" type="text" name="updLongURL" value="<%= urls[shortURL] %>" style="width: 300px">
+          <input type="submit" value="Update">
+        </form>
+      </h5>
+
+    <% } else { %>
+
+      <h3>
+        <font color="red" size="10">URL NOT FOUND </font><br><br>
+        <a href="/urls/new">Click here</a> to create a new short url.<br>
+        <a href="/urls">Click here</a> to see your list of short urls.
+      </h3>
+      <h5>
+        - Management
+      <h5>
+
+    <% } %>
+
+  <% } else { %>
+
+    <h3>
+      <font color="red" size="10">Denied! </font><br><br>
+      Please <a href="/login">Login</a> before you can access this page.
+    </h3>
+    <h5>
+      - Management
+    <h5>
+
+  <% } %>
+
 </body>
 
 </html>
